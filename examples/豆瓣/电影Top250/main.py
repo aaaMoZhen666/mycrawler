@@ -28,7 +28,6 @@ regex = re.compile(
 
 
 def fetch_page(session, start):
-    """请求网页"""
     url = f'{BASE_URL}?start={start}'
     resp = session.get(url, headers=HEADERS)
     resp.raise_for_status()
@@ -36,7 +35,6 @@ def fetch_page(session, start):
 
 
 def parse_movies(html):
-    """解析电影数据"""
     for item in regex.finditer(html):
         yield [
             item.group('name'),
@@ -48,7 +46,6 @@ def parse_movies(html):
 
 
 def save_csv(rows):
-    """写入 CSV"""
     with open(FILE_PATH, 'w', encoding='utf-8', newline='') as f:
         writer = csv.writer(f)
 
@@ -59,7 +56,6 @@ def save_csv(rows):
 
 
 def main():
-    """主程序"""
     all_movies = []
 
     with requests.Session() as session:
